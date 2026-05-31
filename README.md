@@ -1,111 +1,161 @@
-# LAB 21 — Capteurs Embarqués Android
+# Application Android de Gestion et Analyse des Capteurs
 
-## Description
+## Présentation
 
-Application Android développée en **Java** permettant d'exploiter les capteurs embarqués d'un smartphone.
+Cette application Android développée en Java permet d’exploiter plusieurs capteurs présents sur un smartphone afin d’effectuer des mesures en temps réel, analyser les mouvements et visualiser différentes données physiques.
 
-L'application permet :
-- d'afficher les capteurs disponibles,
-- de lire les données en temps réel,
-- d'afficher des graphes,
-- de détecter les mouvements,
-- de créer une boussole numérique,
-- de compter les pas,
-- de reconnaître une activité simple.
+L’objectif principal du projet est d’étudier l’utilisation des capteurs Android ainsi que leur intégration dans une application mobile moderne.
 
 ---
 
-## Fonctionnalités
+# Objectifs du projet
 
-### Liste des capteurs
+L’application permet de :
 
-Affichage des informations techniques :
-
-| Champ | Description |
-|---|---|
-| ID | Identifiant unique du capteur |
-| Nom | Nom du capteur |
-| Fabricant | Fabricant du capteur |
-| Version | Version du capteur |
-| Type | Type de capteur |
-| Résolution | Résolution du capteur |
-| Consommation énergétique | Puissance consommée |
-| Maximum Range | Plage maximale de mesure |
-| Min Delay | Délai minimum entre deux lectures |
-
-### Capteurs supportés
-
-- Température
-- Humidité
-- Proximité
-- Champ magnétique
-- Accéléromètre
-- Gravité
-- Gyroscope
-- Compteur de pas
-- Boussole numérique
-
-### Reconnaissance d'activité
-
-Détection simple :
-- Téléphone stable
-- Marche
-- Saut
-- Mouvement
+- explorer les capteurs disponibles sur l’appareil ;
+- récupérer des mesures en temps réel ;
+- afficher graphiquement les données collectées ;
+- détecter certains mouvements ;
+- créer une boussole numérique ;
+- compter les pas de l’utilisateur ;
+- reconnaître des activités simples.
 
 ---
 
-## Architecture du projet
+# Modules disponibles
+
+## 1. Exploration des capteurs
+
+Affichage des informations principales :
+
+- identifiant du capteur
+- nom
+- fabricant
+- version
+- type
+- précision
+- consommation énergétique
+- plage maximale
+- fréquence minimale
+
+---
+
+## 2. Surveillance des capteurs environnementaux
+
+Capteurs pris en charge :
+
+- température
+- humidité
+- proximité
+- champ magnétique
+
+Fonctionnalités :
+
+- affichage instantané des mesures
+- mise à jour dynamique
+- représentation graphique
+
+---
+
+## 3. Analyse du mouvement
+
+Capteurs utilisés :
+
+- accéléromètre
+- gravité
+- gyroscope
+
+Informations affichées :
+
+- valeurs X, Y et Z
+- intensité du mouvement
+- évolution temporelle
+
+---
+
+## 4. Boussole numérique
+
+La direction est calculée à partir :
+
+- du magnétomètre
+- de l’accéléromètre
+
+Affichage :
+
+- angle de rotation
+- orientation cardinale
+- direction actuelle
+
+---
+
+## 5. Compteur de pas
+
+L’application affiche :
+
+- nombre total de pas
+- nombre de pas pendant la session active
+
+---
+
+## 6. Reconnaissance d’activité
+
+L’application réalise une détection simple :
+
+- appareil immobile
+- marche
+- déplacement
+- saut
+
+---
+
+# Architecture générale
 
 ```text
-com.example.sensors
-│
+com.example.sensorsapp
+
 ├── MainActivity.java
-│
+
 ├── fragments
-│   ├── SensorsListFragment.java
-│   ├── SensorGraphFragment.java
-│   ├── MotionSensorFragment.java
-│   ├── StepCounterFragment.java
+│   ├── SensorsFragment.java
+│   ├── GraphFragment.java
+│   ├── MotionFragment.java
 │   ├── CompassFragment.java
-│   └── ActivityRecognitionFragment.java
-│
-├── utils
-│   └── SensorFormatter.java
-│
-└── views
-    └── LineChartView.java
+│   ├── StepFragment.java
+│   └── ActivityFragment.java
+
+├── helpers
+│   └── SensorUtils.java
+
+└── customviews
+    └── ChartView.java
 ```
 
 ---
 
-## Technologies utilisées
+# Technologies utilisées
 
-| Technologie | Rôle |
-|---|---|
-| Android Studio | IDE de développement |
-| Java | Langage de programmation |
+| Technologie | Utilisation |
+|------------|------------|
+| Java | Développement Android |
 | Android Sensor API | Accès aux capteurs |
 | SensorManager | Gestion des capteurs |
-| SensorEventListener | Écoute des événements capteurs |
-| Navigation Drawer | Navigation principale |
-| CardView | Composants d'interface |
+| SensorEventListener | Écoute des événements |
+| CardView | Interface graphique |
+| Navigation Drawer | Navigation |
 
 ---
 
-## Configuration
+# Installation
 
-### Dépendance Gradle
-
-Ajouter dans `build.gradle` :
+## Dépendance Gradle
 
 ```gradle
 implementation 'androidx.cardview:cardview:1.0.0'
 ```
 
-### Permission Android
+## Permission nécessaire
 
-Ajouter dans `AndroidManifest.xml` :
+Ajouter :
 
 ```xml
 <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
@@ -113,70 +163,29 @@ Ajouter dans `AndroidManifest.xml` :
 
 ---
 
-## Interface utilisateur
+# Interface utilisateur
 
-L'application possède :
-- un **Navigation Drawer** moderne,
-- des cartes **CardView**,
-- des **graphes dynamiques**,
-- une interface moderne style **dashboard**.
+L’application utilise :
 
----
-
-## Fonctionnement
-
-### Température / Humidité / Proximité
-
-Affichage :
-- valeur actuelle,
-- graphe temps réel.
-
-### Accéléromètre / Gravité / Gyroscope
-
-Affichage :
-- axes X, Y, Z,
-- norme du mouvement,
-- graphe dynamique.
-
-### Boussole
-
-Utilisation :
-- accéléromètre,
-- magnétomètre.
-
-Affichage :
-- angle en degrés,
-- direction (Nord, Sud, Est, Ouest).
-
-### Compteur de pas
-
-Affichage :
-- pas depuis démarrage,
-- pas de la session.
-
-### Reconnaissance d'activité
-
-Détection basée sur l'accéléromètre :
-- marche,
-- saut,
-- stabilité,
-- mouvement.
+- navigation latérale
+- cartes interactives
+- tableaux de bord
+- graphes temps réel
 
 ---
 
-## Résultats obtenus
+# Résultats
 
-- ✅ Lecture des capteurs en temps réel
-- ✅ Affichage graphique moderne
-- ✅ Détection du mouvement
-- ✅ Navigation moderne
-- ✅ Interface professionnelle
-- ✅ Application pédagogique complète
-  
-<img width="1078" height="2261" alt="b725fd53-5117-4f04-b457-d6a6c9f96843" src="https://github.com/user-attachments/assets/cbb346d7-e8d2-42a2-b8b9-54d4003064e7" />
+Fonctionnalités validées :
+
+- Lecture temps réel des capteurs
+- Affichage graphique
+- Détection du mouvement
+- Navigation intuitive
+- Interface moderne
 
 ---
 
-## Auteur
-Nom : Ouirouane Hiba
-> Projet réalisé dans le cadre du cours : **Programmation Mobile — Android avec Java**
+# Auteur
+
+AIT HMAD OUSSAMA 
